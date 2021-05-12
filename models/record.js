@@ -8,11 +8,11 @@ const recordSchema = new Schema({
   },
   category: {
     type: String,
-    required: false
+    required: true
   },
   date: {
     type: Date,
-    required: false
+    required: true
   },
   amount: {
     type: Number,

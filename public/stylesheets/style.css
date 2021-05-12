@@ -10,24 +10,25 @@ html,
 body {
   background: #ffdeb7;
   font-family: 'San Francisco', Lato, sans-serif;
-  overflow: hidden;
+  overflow: auto;
   height: 100vh;
   width: 100%;
 }
-
+.container {
+  margin-top: 100px;
+}
+.detail-container,
 .list-group {
   background: rgba(244, 237, 237, 0.4);
-  opacity: 80%;
+  opacity: 85%;
   border-radius: 16px;
 }
+.detail-container,
 #expense-box {
   min-width: 500px;
 }
-.expense-number {
-  color: ;
-}
 .fa-edit:hover {
-  color: #4592af;
+  color: #3e79dd;
 }
 
 .fa-trash-alt:hover {
@@ -48,4 +49,11 @@ body {
 }
 .fa-pen {
   color: gray;
+}
+#add-button {
+  color: #eee;
+}
+#add-button:hover {
+  border: 2px solid #8a8a8a;
+  border-radius: 10px;
 }

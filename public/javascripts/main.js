@@ -1,0 +1,14 @@
+/* Submit form */
+function submitForm(event) {
+  const form = document.querySelector('#submit-form')
+  if (!form.checkValidity()) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+}
+
+/* Click submit button */
+function clickSubmit() {
+  const form = document.querySelector('#submit-form')
+  form.classList.add('was-validated')
+}
