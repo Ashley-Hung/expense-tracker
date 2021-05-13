@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const routes = require('./routes')
 require('./config/mongoose')
 
@@ -11,7 +12,11 @@ app.engine(
   'handlebars',
   exphbs({
     defaultLayout: 'main',
-    helpers: { toMoney: number => number.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ',') }
+    helpers: {
+      toMoney: number => number.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ','),
+      ifEquals: (select, selectValue) => (select === selectValue ? 'selected' : ''),
+      getFormatDate: date => date.toISOString().substring(0, 10)
+    }
   })
 )
 
@@ -19,6 +24,7 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 app.use(routes)
 
 /* Start and Listen on the server */

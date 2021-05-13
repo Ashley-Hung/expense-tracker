@@ -3,23 +3,23 @@
     <ul class="list-group mt-5 list-group-flush" style="background: none;">
       {{#each record}}
         <li class="list-group-item row d-flex justify-content-between align-items-center pt-3">
-          <a class="col-11 d-flex justify-content-between align-items-center text-decoration-none" href="#">
+          <div class="col-11 d-flex justify-content-between align-items-center text-decoration-none">
             <div class="list-front d-flex align-items-center">
               <div class="mr-4">
                 <i class="{{this.icon}} fa-2x fa-fw"></i>
               </div>
-              <div class="list-description d-flex flex-column align-items-center">
+              <div class="list-description">
                 <h5 style="color: #3a3a3a;">{{this.name}}</h5>
                 <small class="text-muted">{{this.date}}</small>
               </div>
             </div>
             <h3 class="pr-2 text-success">${{toMoney this.amount}}</h3>
-          </a>
+          </div>
           <div class="col-1 button-container d-flex flex-column align-items-center">
-            <a class="icon text-muted ml-1" id="edit" href="/restaurants/{{this._id}}/edit">
+            <a class="icon text-muted ml-1" id="edit" href="/records/{{this._id}}/edit">
               <i class="fas fa-edit"></i>
             </a>
-            <form action="/restaurants/{{this._id}}?_method=DELETE" method="post"
+            <form action="/records/{{this._id}}?_method=DELETE" method="post"
               onsubmit="return deleteAlert()">
               <button type="submit" class="text-muted" style="border: none; background:none;">
                 <i class="fas fa-trash-alt"></i>

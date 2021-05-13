@@ -36,4 +36,27 @@ router.post(
   }
 )
 
+// update
+router.get('/:id/edit', (req, res) => {
+  const { id } = req.params
+  // console.log(id)
+
+  return Record.findById(id)
+    .lean()
+    .then(record => res.render('edit', { record }))
+    .catch(error => console.log(error))
+})
+
+router.put('/:id/edit', (req, res) => {
+  const { id } = req.params
+
+  return Record.findById(id)
+    .then(record => {
+      record = Object.assign(record, req.body)
+      return record.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 module.exports = router
