@@ -26,6 +26,7 @@ router.get('/', (req, res) => {
     }
   ])
 
+  // 總金額
   const amount = Record.aggregate([
     {
       $group: {
