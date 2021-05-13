@@ -12,3 +12,8 @@ function clickSubmit() {
   const form = document.querySelector('#submit-form')
   form.classList.add('was-validated')
 }
+
+/* Delete alert */
+function deleteAlert() {
+  return confirm('Are you sure you want to delete this restaurant ?')
+}

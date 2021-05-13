@@ -1,5 +1,6 @@
 const express = require('express')
 const { body, validationResult } = require('express-validator/check')
+const record = require('../../models/record')
 const Record = require('../../models/record')
 const router = express.Router()
 
@@ -56,6 +57,16 @@ router.put('/:id/edit', (req, res) => {
       return record.save()
     })
     .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+// delete
+router.delete('/:id', (req, res) => {
+  const { id } = req.params
+
+  return Record.findById(id)
+    .then(record => record.remove())
+    .then(res.redirect('/'))
     .catch(error => console.log(error))
 })
 
