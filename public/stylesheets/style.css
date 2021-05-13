@@ -18,9 +18,9 @@ body {
   margin-top: 100px;
 }
 .detail-container,
-.list-group {
+.index-container {
   background: rgba(244, 237, 237, 0.4);
-  opacity: 85%;
+  /* opacity: 85%; */
   border-radius: 16px;
 }
 .detail-container,
@@ -56,4 +56,15 @@ body {
 #add-button:hover {
   border: 2px solid #8a8a8a;
   border-radius: 10px;
+}
+.expense-list {
+  height: 61vh;
+  border-radius: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.item-list {
+  border-radius: 8px;
+  background: rgba(250, 247, 247, 0.6);
+  /* border: #e6e5e6 solid 1px; */
 }

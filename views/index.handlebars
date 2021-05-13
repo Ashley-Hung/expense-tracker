@@ -1,44 +1,44 @@
-<div class="row container mx-auto mt-5">
-  <div class="col-6 mx-auto" id="expense-box">
-    <ul class="list-group mt-5 list-group-flush" style="background: none;">
-      {{#each record}}
-        <li class="list-group-item row d-flex justify-content-between align-items-center pt-3">
-          <div class="col-11 d-flex justify-content-between align-items-center text-decoration-none">
-            <div class="list-front d-flex align-items-center">
-              <div class="mr-4">
-                <i class="{{this.icon}} fa-2x fa-fw"></i>
+<div class="row container position-relative mb-5 mx-auto">
+  <div class="index-container col-6 mx-auto border border-secondary">
+    <div class="col-12 mt-5 d-flex justify-content-center">
+      <div class="d-flex flex-column align-items-center mr-5">
+        <small>總額</small>
+        <p>TWD</p>
+      </div>
+      <div class=" text-center">
+        <h1 style="color: tomato;">{{toMoney totalAmount.amount}}</h1>
+      </div>
+    </div>
+    <div class="col-12 row mx-auto" id="expense-box">
+      <ul class="list-group col-12 mt-3 mb-5 list-group-flush list-unstyled expense-list" >
+        {{#each record}}
+          <li class="list-group-item row d-flex justify-content-between align-items-center pt-3 item-list">
+            <div class="col-11 d-flex justify-content-between align-items-center text-decoration-none">
+              <div class="list-front d-flex align-items-center">
+                <div class="mr-4">
+                  <i class="{{this.icon}} fa-2x fa-fw"></i>
+                </div>
+                <div class="list-description">
+                  <h5 style="color: #3a3a3a;">{{this.name}}</h5>
+                  <small class="text-muted">{{this.date}}</small>
+                </div>
               </div>
-              <div class="list-description">
-                <h5 style="color: #3a3a3a;">{{this.name}}</h5>
-                <small class="text-muted">{{this.date}}</small>
-              </div>
+              <h3 class="pr-2 text-success">${{toMoney this.amount}}</h3>
             </div>
-            <h3 class="pr-2 text-success">${{toMoney this.amount}}</h3>
-          </div>
-          <div class="col-1 button-container d-flex flex-column align-items-center">
-            <a class="icon text-muted ml-1" id="edit" href="/records/{{this._id}}/edit">
-              <i class="fas fa-edit"></i>
-            </a>
-            <form action="/records/{{this._id}}?_method=DELETE" method="post"
-              onsubmit="return deleteAlert()">
-              <button type="submit" class="text-muted" style="border: none; background:none;">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </form>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
+            <div class="col-1 button-container d-flex flex-column align-items-center">
+              <a class="icon text-muted ml-1" id="edit" href="/records/{{this._id}}/edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <form action="/records/{{this._id}}?_method=DELETE" method="post"
+                onsubmit="return deleteAlert()">
+                <button type="submit" class="text-muted" style="border: none; background:none;">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </div>
-
-
-{{!-- {{#each record}}
-  <i class="{{this.icon}} fa-2x fa-fw"></i>
-  <div>{{this.name}}</div>
-  <div>{{this.date}}</div>
-  <div>{{toMoney this.amount}}</div>
-{{/each}}
-
-<h1>{{toMoney totalAmount.amount}}</h1> --}}
-
