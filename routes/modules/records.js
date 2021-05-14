@@ -29,6 +29,7 @@ router.get('/filter', (req, res) => {
     {
       $project: { categoryIcon: 0 }
     },
+    { $sort: { date: -1 } },
     {
       $addFields: { date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } } }
     }
@@ -50,8 +51,12 @@ router.get('/filter', (req, res) => {
 
   Promise.all([record, amount])
     .then(([record, amount]) => {
-      const totalAmount = amount[0]
-      res.render('index', { totalAmount, record, category })
+      if (record.length !== 0) {
+        const totalAmount = amount[0]
+        res.render('index', { totalAmount, record, category })
+      } else {
+        res.redirect('/')
+      }
     })
     .catch(error => console.error(error))
 })
@@ -67,11 +72,7 @@ router.post(
     body('name').trim().notEmpty().withMessage('name is required'),
     body('date').notEmpty().isISO8601().withMessage('date is required or the format is wrong'),
     body('category').notEmpty().withMessage('category is required'),
-    body('amount')
-      .trim()
-      .notEmpty()
-      .isInt({ min: 1 })
-      .withMessage('amount is required or you must enter more then 0')
+    body('amount').trim().notEmpty().isInt({ min: 1 }).withMessage('amount is required or you must enter more then 0')
   ],
   (req, res) => {
     const errors = validationResult(req)

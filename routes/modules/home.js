@@ -18,12 +18,9 @@ router.get('/', (req, res) => {
         newRoot: { $mergeObjects: [{ $arrayElemAt: ['$categoryIcon', 0] }, '$$ROOT'] }
       }
     },
-    {
-      $project: { categoryIcon: 0 }
-    },
-    {
-      $addFields: { date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } } }
-    }
+    { $project: { categoryIcon: 0 } },
+    { $sort: { date: -1 } },
+    { $addFields: { date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } } } }
   ])
 
   // 總金額
@@ -36,10 +33,27 @@ router.get('/', (req, res) => {
     }
   ])
 
-  Promise.all([amount, record])
-    .then(([amount, record]) => {
+  // render month selector
+  const months = Record.find()
+    .sort({ date: -1 })
+    .then(records => {
+      const months = []
+      records.forEach(record => {
+        const displayDate = record.date.toISOString().substring(0, 7)
+
+        if (months.includes(displayDate)) {
+          return
+        }
+        months.push(displayDate)
+      })
+      return months
+    })
+
+  Promise.all([amount, record, months])
+    .then(([amount, record, months]) => {
       const totalAmount = amount[0]
-      res.render('index', { totalAmount, record })
+      // res.send(months)
+      res.render('index', { totalAmount, record, months })
     })
     .catch(error => console.error(error))
 })

@@ -1,6 +1,6 @@
 <div class="row container position-relative mb-5 mx-auto">
-  <div class="index-container col-6 mx-auto border border-secondary">
-    <div class="col-12 mt-5 mb-3 d-flex justify-content-center">
+  <div class="index-container py-2 col-6 mx-auto border border-secondary">
+    <div class="col-12 mt-5 d-flex justify-content-center">
       <div class="d-flex flex-column align-items-center mr-5">
         <small>總額</small>
         <p>TWD</p>
@@ -10,12 +10,27 @@
       </div>
     </div>
 
-    <div class="select-container mt-2 row col-12 justify-content-end">
-      <form action="/records/filter" style="opacity: 80%;">
-        <div class="h-100 form-group mb-2 d-flex">
-          <label class="mr-2 d-flex align-items-center"><i class="fas fa-filter"></i></label>
-          <select name="category" class="form-control" id="category" onchange="this.form.submit()" required>
-            <option value="" disabled selected hidden> -- Filter by Category -- </option>
+  <div class="col-12 d-flex justify-content-around">
+    <div class="select-container mt-4 row col-6">
+      <form action="" class="w-100">
+        <div class="form-group d-flex align-items-center">
+          <i class="fas fa-calendar-minus mr-2"></i>
+          <select name="month" class="form-control" id="month" onchange="this.form.submit()">
+            <option value="" disabled selected hidden> -- 開發中 -- </option>
+            {{#each months}}
+              <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="select-container mt-4 row col-6">
+      <form action="/records/filter" class="w-100">
+        <div class="form-group d-flex align-items-center">
+          <i class="fas fa-filter mr-2"></i >
+          <select name="category" class="form-control" id="category" onchange="this.form.submit()">
+            <option value="" disabled selected hidden> -- Filter by category -- </option>
             <option value="家居物業" {{ifEquals category '家居物業' }}>家居物業</option>
             <option value="交通出行" {{ifEquals category '交通出行' }}>交通出行</option>
             <option value="休閒娛樂" {{ifEquals category '休閒娛樂' }}>休閒娛樂</option>
@@ -25,9 +40,10 @@
         </div>
       </form>
     </div>
+  </div>
 
     <div class="col-12 row mx-auto" id="expense-box">
-      <ul class="list-group col-12 mt-3 mb-5 list-group-flush list-unstyled expense-list" >
+      <ul class="list-group col-12 mt-1 mb-5 list-group-flush list-unstyled expense-list" >
         {{#each record}}
           <li class="list-group-item row d-flex justify-content-between align-items-center pt-3 item-list">
             <div class="col-11 d-flex justify-content-between align-items-center text-decoration-none">

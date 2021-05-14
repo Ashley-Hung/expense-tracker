@@ -13,7 +13,7 @@ app.engine(
   exphbs({
     defaultLayout: 'main',
     helpers: {
-      toMoney: number => number.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ','),
+      toMoney: number => (number === undefined ? 0 : number.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')),
       ifEquals: (select, selectValue) => (select === selectValue ? 'selected' : ''),
       getFormatDate: date => date.toISOString().substring(0, 10)
     }
