@@ -1,7 +1,6 @@
 const express = require('express')
 const { body, validationResult } = require('express-validator/check')
 const Record = require('../../models/record')
-const Category = require('../../models/category')
 const router = express.Router()
 
 /* Route setting */
