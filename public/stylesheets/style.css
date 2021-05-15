@@ -57,14 +57,10 @@ body {
   border: 2px solid #8a8a8a;
   border-radius: 10px;
 }
-.expense-list {
+#expense-box {
   height: 61vh;
-  border-radius: 16px;
   overflow-y: auto;
-  overflow-x: hidden;
 }
 .item-list {
-  border-radius: 8px;
   background: rgba(250, 247, 247, 0.6);
-  /* border: #e6e5e6 solid 1px; */
 }
