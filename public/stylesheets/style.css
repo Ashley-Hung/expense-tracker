@@ -58,7 +58,7 @@ body {
   border-radius: 10px;
 }
 #expense-box {
-  height: 61vh;
+  height: 53vh;
   overflow-y: auto;
 }
 .item-list {
