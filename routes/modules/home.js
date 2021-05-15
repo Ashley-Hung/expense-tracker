@@ -13,11 +13,7 @@ router.get('/', (req, res) => {
         as: 'categoryIcon'
       }
     },
-    {
-      $replaceRoot: {
-        newRoot: { $mergeObjects: [{ $arrayElemAt: ['$categoryIcon', 0] }, '$$ROOT'] }
-      }
-    },
+    { $replaceRoot: { newRoot: { $mergeObjects: [{ $arrayElemAt: ['$categoryIcon', 0] }, '$$ROOT'] } } },
     { $project: { categoryIcon: 0 } },
     { $sort: { date: -1 } },
     { $addFields: { date: { $dateToString: { format: '%Y-%m-%d', date: '$date' } } } }
