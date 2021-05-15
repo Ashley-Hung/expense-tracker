@@ -9,6 +9,8 @@
 - 所有消費記錄按照日期排序(最新的紀錄在最上面)
 - 依照月份/類別篩選出消費記錄
 
+👉 Try it on [Heroku](https://secret-anchorage-17903.herokuapp.com/)
+
 ![demo gif](https://github.com/Ashley-Hung/expense-tracker/blob/master/demo.gif)
 
 
@@ -22,8 +24,6 @@
 - [body-parser](https://www.npmjs.com/package/body-parser)： 1.19.0
 - [mongoose](https://www.npmjs.com/package/mongoose)：5.12.8
 - [mongoDB](https://www.mongodb.com/try/download/community)：4.2.13
-
-👉 Try it on [Heroku](https://secret-anchorage-17903.herokuapp.com/)
 
 ## 安裝與執行
 
