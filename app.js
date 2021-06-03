@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const routes = require('./routes')
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 
 const app = express()
@@ -25,7 +26,6 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
 app.use(
   session({
     secret: 'ThisIsMySecret',
@@ -33,6 +33,8 @@ app.use(
     saveUninitialized: true
   })
 )
+usePassport(app)
+app.use(methodOverride('_method'))
 app.use(routes)
 
 /* Start and Listen on the server */
