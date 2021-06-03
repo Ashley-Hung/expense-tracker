@@ -1,11 +1,13 @@
 const express = require('express')
 const Record = require('../../models/record')
-const filterMonth = require('../../controllers/filterMonth')
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-  const record = await Record.aggregate([
+router.get('/', (req, res) => {
+  const userId = req.user._id
+  // try {
+  const record = Record.aggregate([
+    { $match: { userId } },
     {
       $lookup: {
         from: 'categories',
@@ -21,16 +23,43 @@ router.get('/', async (req, res) => {
   ])
 
   // 總金額
-  const totalAmount = record.map(record => record.amount).reduce((acc, cur) => acc + cur)
+  const amount = Record.aggregate([
+    { $match: { userId } },
+    {
+      $group: {
+        _id: null,
+        amount: { $sum: '$amount' }
+      }
+    }
+  ])
 
   // render month selector
-  const months = await filterMonth.getRenderMonths // render month selector
+  const months = Record.find({ userId })
+    .sort({ date: -1 })
+    .then(records => {
+      const months = []
+      records.forEach(record => {
+        const displayDate = record.date.toISOString().substring(0, 7)
 
-  Promise.all([totalAmount, record, months])
-    .then(([totalAmount, record, months]) => {
-      res.render('index', { totalAmount, record, months })
+        if (months.includes(displayDate)) {
+          return
+        }
+        months.push(displayDate)
+      })
+      return months
     })
-    .catch(error => console.error('data error'))
+
+  Promise.all([amount, record, months])
+    .then(([amount, record, months]) => {
+      if (record.length > 0) {
+        const totalAmount = amount[0].amount
+        res.render('index', { totalAmount, record, months })
+      } else {
+        const totalAmount = 0
+        res.render('index', { totalAmount, record, months })
+      }
+    })
+    .catch(error => console.error('something went wrong'))
 })
 
 module.exports = router

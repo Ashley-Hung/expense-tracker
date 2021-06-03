@@ -22,51 +22,60 @@ router.post(
     body('amount').trim().notEmpty().isInt({ min: 1 }).withMessage('amount is required or you must enter more then 0')
   ],
   (req, res) => {
+    const userId = req.user._id
     const errors = validationResult(req)
-    const record = req.body
+    const { name, category, date, amount, merchant } = req.body
     if (!errors.isEmpty()) {
       res.render('create', { errors: errors.mapped(), record })
     } else {
-      return Record.create(record)
+      return Record.create({ name, category, date, amount, merchant, userId })
         .then(() => {
           res.redirect('/')
         })
-        .catch(error => console.log(error))
+        .catch(error => res.end('somthing went wrong when posting the new record'))
     }
   }
 )
 
 // update
 router.get('/:id/edit', (req, res) => {
-  const { id } = req.params
-  // console.log(id)
+  const userId = req.user._id
+  const _id = req.params.id // record id
 
-  return Record.findById(id)
+  return Record.findOne({ _id, userId })
     .lean()
     .then(record => res.render('edit', { record }))
-    .catch(error => console.log(error))
+    .catch(error => res.end('Something went wrong when finding the record'))
 })
 
 router.put('/:id/edit', (req, res) => {
-  const { id } = req.params
+  const userId = req.user._id
+  const _id = req.params.id
 
-  return Record.findById(id)
+  return Record.findById({ _id, userId })
     .then(record => {
       record = Object.assign(record, req.body)
       return record.save()
     })
     .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+    .catch(error => {
+      res.end()
+      console.log(error)
+    })
 })
 
 // delete
 router.delete('/:id', (req, res) => {
-  const { id } = req.params
+  const userId = req.user._id
+  const _id = req.params.id
 
-  return Record.findById(id)
+  return Record.findOne({ _id, userId })
     .then(record => record.remove())
     .then(res.redirect('/'))
-    .catch(error => console.log(error))
+    .catch(error => {
+      res.end()
+      console.log(error)
+    })
 })
 
 module.exports = router

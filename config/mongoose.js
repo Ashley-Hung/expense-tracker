@@ -5,7 +5,8 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/record-list'
 /* Database connection and statement */
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 })
 
 db.on('error', () => {
