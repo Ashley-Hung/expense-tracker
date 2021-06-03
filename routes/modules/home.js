@@ -1,10 +1,11 @@
 const express = require('express')
 const Record = require('../../models/record')
+const filterMonth = require('../../controllers/filterMonth')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  const record = Record.aggregate([
+router.get('/', async (req, res) => {
+  const record = await Record.aggregate([
     {
       $lookup: {
         from: 'categories',
@@ -20,38 +21,16 @@ router.get('/', (req, res) => {
   ])
 
   // 總金額
-  const amount = Record.aggregate([
-    {
-      $group: {
-        _id: null, // 不能省略
-        amount: { $sum: '$amount' }
-      }
-    }
-  ])
+  const totalAmount = record.map(record => record.amount).reduce((acc, cur) => acc + cur)
 
   // render month selector
-  const months = Record.find()
-    .sort({ date: -1 })
-    .then(records => {
-      const months = []
-      records.forEach(record => {
-        const displayDate = record.date.toISOString().substring(0, 7)
+  const months = await filterMonth.getRenderMonths // render month selector
 
-        if (months.includes(displayDate)) {
-          return
-        }
-        months.push(displayDate)
-      })
-      return months
-    })
-
-  Promise.all([amount, record, months])
-    .then(([amount, record, months]) => {
-      const totalAmount = amount[0]
-      // res.send(months)
+  Promise.all([totalAmount, record, months])
+    .then(([totalAmount, record, months]) => {
       res.render('index', { totalAmount, record, months })
     })
-    .catch(error => console.error(error))
+    .catch(error => console.error('data error'))
 })
 
 module.exports = router

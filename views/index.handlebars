@@ -6,28 +6,24 @@
         <p>TWD</p>
       </div>
       <div class=" text-center">
-        <h1 style="color: tomato;">{{toMoney totalAmount.amount}}</h1>
+        <h1 style="color: tomato;">{{toMoney totalAmount}}</h1>
       </div>
     </div>
 
     <div class="col-12 d-flex justify-content-around">
-      <div class="select-container mt-4 row col-6">
-        <form action="/records/filter" class="w-100">
-          <div class="form-group d-flex align-items-center">
+      <div class="select-container mt-4 col-12">
+        <form action="/records/filter" class="w-100 row">
+          <div class="form-group d-flex align-items-center col-6">
             <i class="fas fa-calendar-minus mr-2"></i>
-            <select name="month" class="form-control" id="month" {{#if category}}disabled{{/if}} onchange="this.form.submit()">
+            <select name="month" class="form-control" id="month" {{#if category}}disabled{{/if}}  onchange="this.form.submit()">
               <option value="" disabled selected hidden> {{#if selectedMonth}}{{selectedMonth}}{{else}}Filter by month{{/if}}</option>
               {{#each months}}
                 <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
           </div>
-        </form>
-      </div>
 
-      <div class="select-container mt-4 row col-6">
-        <form action="/records/filter" class="w-100">
-          <div class="form-group d-flex align-items-center">
+          <div class="form-group d-flex align-items-center col-6">
             <i class="fas fa-filter mr-2"></i >
             <select name="category" class="form-control" id="category" {{#if selectedMonth}}disabled{{/if}} onchange="this.form.submit()">
               <option value="" disabled selected hidden>Filter by category</option>
@@ -38,8 +34,14 @@
               <option value="其他" {{ifEquals category '其他' }}>其他</option>
             </select>
           </div>
+
         </form>
       </div>
+
+      {{!-- <div class="select-container mt-4 row col-6">
+        <form action="/records/filter" class="w-100">
+        </form>
+      </div> --}}
     </div>
 
     <div class="col-12 mb-5 row mx-auto" id="expense-box">
