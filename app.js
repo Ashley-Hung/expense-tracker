@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
+
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+
 const routes = require('./routes')
 const usePassport = require('./config/passport')
 require('./config/mongoose')
@@ -29,7 +32,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
   session({
-    secret: 'ThisIsMySecret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
   })
