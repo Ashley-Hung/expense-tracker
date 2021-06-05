@@ -6,9 +6,26 @@ module.exports = (date, amount) => {
   require('ajv-errors')(ajv)
 
   let today = new Date()
-  today.setTime(today.getTime() + 24 * 60 * 60 * 1000)[0]
-  const tomorrow = today.toISOString().slice(0, 10)
-  today = new Date().toISOString().slice(0, 10)
+  let dd = today.getDate()
+  let mm = today.getMonth() + 1
+  let yyyy = today.getFullYear()
+
+  dd_today = dd
+  dd += 1
+  if (dd < 10) {
+    dd = '0' + dd
+  }
+  if (mm < 10) {
+    mm = '0' + mm
+  }
+  if (dd_today < 10) {
+    dd_today = '0' + dd_today
+  }
+
+  today = yyyy + '-' + mm + '-' + dd_today
+  tomorrow = yyyy + '-' + mm + '-' + dd
+  // console.log(today)
+  // console.log(tomorrow)
 
   const schema = {
     type: 'object',
