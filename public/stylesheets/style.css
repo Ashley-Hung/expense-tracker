@@ -24,8 +24,17 @@ body {
   border-radius: 16px;
 }
 .detail-container,
-#expense-box {
-  min-width: 500px;
+.index-container {
+  min-width: 463px;
+}
+.list-ul {
+  overflow-x: auto;
+}
+.login-container,
+.register-container {
+  border-radius: 16px;
+  opacity: 95%;
+  background: rgba(244, 237, 237, 0.4);
 }
 .fa-edit:hover {
   color: #3e79dd;
