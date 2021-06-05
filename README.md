@@ -21,7 +21,43 @@
 
 
 
-![demo gif](https://github.com/Ashley-Hung/expense-tracker_V2/blob/main/demo.gif)
+![demo gif](https://github.com/Ashley-Hung/expense-tracker/blob/main/demo.gif)
+
+
+
+## 安裝與執行
+
+1. clone 此專案至本機電腦
+
+   ```
+   $ git clone https://github.com/Ashley-Hung/expense-tracker.git
+   ```
+
+2. 安裝
+
+   ```
+   $ cd expense-tracker
+   $ npm install
+   ```
+
+3. 執行
+
+   ```
+   $ npm run seed
+   $ npm run dev
+   ```
+
+4. 執行成功後，Terminal 會顯示下列訊息
+
+   ```
+   Express is listening on localhost:3000
+   ```
+
+5. 使用下列 URL 於瀏覽器上進行瀏覽
+
+   ```
+   http://localhost:3000
+   ```
 
 
 
@@ -44,40 +80,6 @@
 - [ajv](https://www.npmjs.com/package/ajv)：8.5.0
 - [ajv-errors](https://www.npmjs.com/package/ajv-errors)：3.0.0
 - [ajv-formats](https://www.npmjs.com/package/ajv-formats)：2.1.0
-
-## 安裝與執行
-
-1. clone 此專案至本機電腦
-
-   ```
-   $ git clone https://github.com/Ashley-Hung/expense-tracker_V2.git
-   ```
-
-2. 安裝
-
-   ```
-   $ cd expense-tracker_V2
-   $ npm install
-   ```
-
-3. 執行
-
-   ```
-   $ npm run seed
-   $ npm run dev
-   ```
-
-4. 執行成功後，Terminal 會顯示下列訊息
-
-   ```
-   Express is listening on localhost:3000
-   ```
-
-5. 使用下列 URL 於瀏覽器上進行瀏覽
-
-   ```
-   http://localhost:3000
-   ```
 
 
 
