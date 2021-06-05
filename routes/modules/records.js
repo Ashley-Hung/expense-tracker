@@ -1,7 +1,7 @@
 const express = require('express')
-const { body, validationResult } = require('express-validator')
 const Record = require('../../models/record')
 const filter = require('../../controllers/filter')
+const validator = require('../../controllers/validator')
 const router = express.Router()
 
 /* Route setting */
@@ -13,29 +13,30 @@ router.get('/create', (req, res) => {
   res.render('create')
 })
 
-router.post(
-  '/',
-  [
-    body('name').trim().notEmpty().withMessage('name is required'),
-    body('date').notEmpty().isISO8601().withMessage('date is required or the format is wrong'),
-    body('category').notEmpty().withMessage('category is required'),
-    body('amount').trim().notEmpty().isInt({ min: 1 }).withMessage('amount is required or you must enter more then 0')
-  ],
-  (req, res) => {
-    const userId = req.user._id
-    const errors = validationResult(req)
-    const { name, category, date, amount, merchant } = req.body
-    if (!errors.isEmpty()) {
-      res.render('create', { errors: errors.mapped(), record })
-    } else {
-      return Record.create({ name, category, date, amount, merchant, userId })
-        .then(() => {
-          res.redirect('/')
-        })
-        .catch(error => res.end('somthing went wrong when posting the new record'))
-    }
+router.post('/', (req, res) => {
+  const userId = req.user._id
+  const { name, category, date, amount, merchant } = req.body
+  let errors = []
+
+  if (!name || !category || !date || !amount) {
+    errors = [{ message: '所有欄位皆為必填' }]
+    return res.render('create', { errors })
   }
-)
+
+  errors = validator(date, amount)
+  if (errors) {
+    res.render('create', { name, category, date, amount, merchant, errors })
+  } else {
+    return Record.create({ name, category, date, amount, merchant, userId })
+      .then(() => {
+        res.redirect('/')
+      })
+      .catch(error => {
+        res.render('error')
+        console.error(error)
+      })
+  }
+})
 
 // update
 router.get('/:id/edit', (req, res) => {
@@ -44,24 +45,43 @@ router.get('/:id/edit', (req, res) => {
 
   return Record.findOne({ _id, userId })
     .lean()
-    .then(record => res.render('edit', { record }))
-    .catch(error => res.end('Something went wrong when finding the record'))
+    .then(record => {
+      record.date = record.date.toISOString().substring(0, 10)
+      res.render('edit', { record })
+    })
+    .catch(error => {
+      res.render('error')
+      console.error(error)
+    })
 })
 
-router.put('/:id/edit', (req, res) => {
+router.put('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
+  const record = req.body
+  let errors = []
+  req.body._id = req.path.slice(1)
 
-  return Record.findById({ _id, userId })
-    .then(record => {
-      record = Object.assign(record, req.body)
-      return record.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => {
-      res.end()
-      console.log(error)
-    })
+  if (!record.name || !record.category || !record.date || !record.amount) {
+    errors = [{ message: '所有欄位皆為必填' }]
+    return res.render('edit', { record, errors })
+  }
+
+  errors = validator(record.date, record.amount)
+  if (errors) {
+    res.render('edit', { record, errors })
+  } else {
+    return Record.findById({ _id, userId })
+      .then(edit => {
+        edit = Object.assign(edit, record)
+        return edit.save()
+      })
+      .then(() => res.redirect('/'))
+      .catch(error => {
+        res.render('error')
+        console.error(error)
+      })
+  }
 })
 
 // delete
@@ -73,8 +93,8 @@ router.delete('/:id', (req, res) => {
     .then(record => record.remove())
     .then(res.redirect('/'))
     .catch(error => {
-      res.end()
-      console.log(error)
+      res.render('error')
+      console.error(error)
     })
 })
 

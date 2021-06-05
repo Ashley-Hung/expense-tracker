@@ -16,7 +16,7 @@
           <div class="form-group d-flex align-items-center col-6">
             <i class="fas fa-calendar-minus mr-2"></i>
             <select name="month" class="form-control" id="month" onchange="this.form.submit()">
-              <option value="" disabled selected hidden>{{#if selectedMonth}}{{selectedMonth}}{{else}}Filter by month{{/if}}</option>
+              <option value="" disabled selected>Filter by month</option>
               {{#each months}}
                 <option value="{{this}}" {{ifEquals ../selectedMonth this}}>{{this}}</option>
                 {{!-- each 內使用其他參數 --}}
@@ -30,7 +30,7 @@
           <div class="form-group d-flex align-items-center col-6">
             <i class="fas fa-filter mr-2"></i >
             <select name="category" class="form-control" id="category" onchange="this.form.submit()">
-              <option value="" disabled selected hidden>Filter by category</option>
+              <option value="" disabled selected>Filter by category</option>
               <option value="家居物業" {{ifEquals category '家居物業' }}>家居物業</option>
               <option value="交通出行" {{ifEquals category '交通出行' }}>交通出行</option>
               <option value="休閒娛樂" {{ifEquals category '休閒娛樂' }}>休閒娛樂</option>

@@ -20,8 +20,7 @@ app.engine(
     defaultLayout: 'main',
     helpers: {
       toMoney: number => (number === undefined ? 0 : number.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')),
-      ifEquals: (select, selectValue) => (select === selectValue ? 'selected' : ''),
-      getFormatDate: date => date.toISOString().substring(0, 10)
+      ifEquals: (select, selectValue) => (select === selectValue ? 'selected' : '')
     }
   })
 )

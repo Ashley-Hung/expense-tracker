@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
   const userId = req.user._id
-  // try {
+
   const record = Record.aggregate([
     { $match: { userId } },
     {
@@ -59,7 +59,10 @@ router.get('/', (req, res) => {
         res.render('index', { totalAmount, record, months })
       }
     })
-    .catch(error => console.error('something went wrong'))
+    .catch(error => {
+      res.render('error')
+      console.error(error)
+    })
 })
 
 module.exports = router

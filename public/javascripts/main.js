@@ -17,3 +17,6 @@ function clickSubmit() {
 function deleteAlert() {
   return confirm('Are you sure you want to delete this record?')
 }
+
+const today = new Date().toISOString().slice(0, 10)
+document.getElementById('date').max = today
