@@ -21,7 +21,7 @@
 
 
 
-![demo gif](https://github.com/Ashley-Hung/expense-tracker/blob/master/demo.gif)
+![demo gif](https://github.com/Ashley-Hung/expense-tracker/blob/main/demo.gif)
 
 
 
