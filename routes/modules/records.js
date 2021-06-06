@@ -1,8 +1,16 @@
 const express = require('express')
 const Record = require('../../models/record')
 const filter = require('../../controllers/filter')
-const validator = require('../../controllers/validator')
+const { schema } = require('../../middleware/schema')
 const router = express.Router()
+const Ajv = require('ajv').default
+const addFormats = require('ajv-formats')
+const ajv = new Ajv({ allErrors: true }) // 顯示超過一個以上的 errors
+addFormats(ajv)
+require('ajv-errors')(ajv)
+
+// compile validator
+const validate = ajv.compile(schema)
 
 /* Route setting */
 // filter
@@ -23,7 +31,9 @@ router.post('/', (req, res) => {
     return res.render('create', { errors })
   }
 
-  errors = validator(date, amount)
+  validate({ date, amount: Number(amount) })
+  errors = validate.errors
+
   if (errors) {
     res.render('create', { name, category, date, amount, merchant, errors })
   } else {
@@ -67,7 +77,9 @@ router.put('/:id', (req, res) => {
     return res.render('edit', { record, errors })
   }
 
-  errors = validator(record.date, record.amount)
+  validate({ date: record.date, amount: Number(record.amount) })
+  errors = validate.errors
+
   if (errors) {
     res.render('edit', { record, errors })
   } else {
