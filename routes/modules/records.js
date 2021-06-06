@@ -1,7 +1,7 @@
 const express = require('express')
 const Record = require('../../models/record')
 const filter = require('../../controllers/filter')
-const { schema } = require('../../middleware/schema')
+const { schema } = require('../../controllers/schema')
 const router = express.Router()
 const Ajv = require('ajv').default
 const addFormats = require('ajv-formats')
